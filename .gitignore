@@ -1,0 +1,10 @@
+*.pyc
+*.png
+*.so
+*.c
+*.pkl
+*.swp
+*.swo
+*.make
+*.cmake
+CMakeCache.txt
