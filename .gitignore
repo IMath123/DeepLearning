@@ -7,4 +7,5 @@
 *.swo
 *.make
 *.cmake
+*__pycache__*
 CMakeCache.txt

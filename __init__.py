@@ -95,7 +95,6 @@ from . import utils
 
 from .math import *
 from .usual_command import *
-from . import Evaluate
 
 
 #  from .Random import *

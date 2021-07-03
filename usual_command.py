@@ -4,7 +4,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 import imath
 import os
-from imath.math import ICP_Transorm_Matrix
 
 #TODO : 完成此表
 numpytype2torchtype = {
