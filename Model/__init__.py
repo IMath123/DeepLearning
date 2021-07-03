@@ -1,7 +1,7 @@
 import yaml
 import torch
 import torch.nn as nn
-import layers
+from . import layers
 
 class Model(nn.Module):
 
@@ -10,7 +10,6 @@ class Model(nn.Module):
 
         with open(yaml_file, 'r') as file:
             model_cfg = yaml.load(file.read(), Loader=yaml.FullLoader)
-            print(model_cfg)
 
         self.layers  = []
         self.sources = []

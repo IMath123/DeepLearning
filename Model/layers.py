@@ -21,3 +21,14 @@ class add(Module):
 
     def forward(self, a, b):
         return a + b
+
+
+class reshape(Module):
+
+    def __init__(self, *shape):
+        super(reshape, self).__init__()
+
+        self.shape = shape
+
+    def forward(self, input):
+        return input.view(*self.shape)

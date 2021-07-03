@@ -2,7 +2,6 @@ import json
 import torch
 from imath.DataLoader import DataLoader
 from imath.Controller import Controller, ControllerSet
-from imath.Config import Config
 import imath.ProgressBar
 import os
 import numpy as np
@@ -14,7 +13,7 @@ from imath.timer import Timer
 import h5py as h5
 
 
-save_type = [nn.Module, op.Optimizer, DataLoader, Config, Controller]
+save_type = [nn.Module, op.Optimizer, DataLoader, Controller]
 
 
 def is_saved_subclass(value):
@@ -52,7 +51,7 @@ class Trainer(object):
 
         if controllers is None:
             controllers = []
-            self.controllerset = ControllerSet(controllers)
+            self.controllerset = ControllerSet()
         elif type(controllers) == ControllerSet:
             self.controllerset = controllers
         else:
