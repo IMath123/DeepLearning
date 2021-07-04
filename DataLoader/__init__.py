@@ -3,7 +3,6 @@ from torch.utils.data import Dataset as torch_Dataset
 from torch.utils.data import Sampler
 from tqdm import tqdm
 import re
-#  import torch_geometric
 from ..ProgressBar import SimpleBar
 
 def Bar(x):
@@ -23,12 +22,6 @@ def worker_init_fn_seed(worker_id):
     seed += worker_id
     np.random.seed(seed)
     random.seed(seed)
-
-np_str_obj_array_pattern = re.compile(r'[SaUO]')
-
-default_collate_err_msg_format = (
-    "default_collate: batch must contain tensors, numpy arrays, numbers, "
-    "dicts or lists; found {}")
 
 
 class DataSet(torch_Dataset):

@@ -9,7 +9,11 @@ class Model(nn.Module):
         super(Model, self).__init__()
 
         with open(yaml_file, 'r') as file:
-            model_cfg = yaml.load(file.read(), Loader=yaml.FullLoader)
+            try:
+                model_cfg = yaml.load(file.read(), Loader=yaml.FullLoader)
+            except:
+                # for old verion or yaml
+                model_cfg = yaml.load(file.read())
 
         self.layers  = []
         self.sources = []
@@ -62,6 +66,11 @@ class Model(nn.Module):
                 source_outputs.append(self.get_layer_output(source_index, forward_dict))
 
             output = self.layers[index](*source_outputs)
+            for i in range(self.nums[index] - 1):
+                if not isinstance(output, list):
+                    output = [output]
+                output = self.layers[index](*output)
+
             forward_dict[index] = output
             return output
 
@@ -77,16 +86,3 @@ class Model(nn.Module):
             return outputs[0]
 
         return outputs
-
-
-if __name__ == "__main__":
-    model = Model('./tmp.yaml')
-
-    input = torch.zeros((32, 3, 112, 96))
-    output = model(input)
-
-    if isinstance(output, list):
-        for o in output:
-            print(o.shape)
-    else:
-        print(output.shape)
