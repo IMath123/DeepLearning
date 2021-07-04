@@ -237,12 +237,7 @@ class DataLoader(object):
             self.test_batch_size   = self.batch_size
         if self.valid_batch_size is None:
             self.valid_batch_size  = self.batch_size
-        if self.collate_err_msg is None:
-            self.collate_err_msg   = default_collate_err_msg_format
-        if self.collate_fn_map is None:
-            self.collate_fn_map    = {}
 
-        #  self.collate_fn        = get_collate_fn(self.collate_fn_map, self.collate_err_msg)
         self.collate_fn = None
         self.loaded = False
 

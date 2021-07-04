@@ -1,0 +1,30 @@
+batch_size: 256
+lr: 0.1
+
+
+model : Face/models/little_net.yaml
+
+dataloader: 
+- name : DataLoader
+  source : Face/dataloaders.py
+  params :
+    data_root: /home/dj/Downloads/lfw-deepfunneled
+    list_filename: /home/dj/Downloads/lfw-deepfunneled/train_list.txt
+    batch_size: 128
+    shuffle: true
+- name : DataLoader
+  source : asd
+  params :
+    data_root: sss
+    list_filename: sss/train_list.txt
+    batch_size: 128
+    shuffle: true
+
+
+trainer:
+  name : Trainer
+  source : Face/trainers.py
+  params :
+     model: $model
+     criterion: criterion
+     optimizer: optimizer

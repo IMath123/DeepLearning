@@ -5,54 +5,18 @@ import numpy as np
 import os
 import torch.nn as nn
 import torch.optim as optim
+from trainers import Trainer
+from dataloaders import DataLoader
 
-class DataLoader(im.DataLoader.DataLoader):
-
-    def __init__(self, **kwargs):
-        super(DataLoader, self).__init__(**kwargs)
-
-    def get_data(self, data_root, line, **kwargs):
-        name, label = line.split()
-        img = im.imread(os.path.join(data_root, name), 1) / 255
-
-        start = int(img.shape[1] * 1 / 3)
-        end = int(img.shape[1] * 2 / 3)
-        img = img[:, start: end, start: end].detach()
-        label = int(label)
-
-        return img.view(3, 83, 83), label
-
-class Trainer(im.Trainer.Trainer):
-
-    def __init__(self, model, criterion, optimizer, **kwargs):
-        super(Trainer, self).__init__(**kwargs)
-
-        self.model     = model
-        self.criterion = criterion
-        self.optimizer = optimizer
-
-    def forward(self, data, forward_mode, **kwargs):
-        img, label = data
-
-        predict = self.model(img)
-        acc = (torch.argmax(predict, dim=1) == label).float().mean()
-
-        if forward_mode == 'train':
-            loss = self.criterion(predict, label)
-            self.update(self.optimizer, loss)
-
-            return {'loss': loss, 'acc': acc}
-        else:
-            return {'acc': acc}
 
 if __name__ == "__main__":
     dataloader = DataLoader(
-        data_root          = '/home/imath/Downloads/lfw-deepfunneled',
-        list_filename      = '/home/imath/Projects/FR_demo/train_list.txt',
-        shuffle            = True,
-        batch_size         = 16,
-        test_data_root     = '/home/imath/Downloads/lfw-deepfunneled',
-        test_list_filename = '/home/imath/Projects/FR_demo/test_list.txt',
+        data_root     = '/home/dj/Downloads/lfw-deepfunneled',
+        list_filename = '/home/dj/Downloads/lfw-deepfunneled/train_list.txt',
+        shuffle       = True,
+        batch_size    = 64,
+        #  test_data_root     = '/home/dj/Downloads/lfw-deepfunneled',
+        #  test_list_filename = '/home/dj/Downloads/lfw-deepfunneled/test_list.txt',
     )
 
     model = Model('./models/little_net.yaml')
